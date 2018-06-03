@@ -9,9 +9,7 @@ class Worker:
         self._checker = None
         self._area = None
 
-    def treat_file(self, file_path):
-        with open(file_path, "r", encoding='utf-8') as fp:
-            lines = fp.read().splitlines()
+    def work(self, lines):
         self._checker = Checker(lines)
         ret = self._checker.process()
         if ret == -1:
@@ -29,6 +27,7 @@ class Worker:
         if mowers is None:
             return -1
         self._move_mowers(orders_list, mowers, positions)
+        return 0
 
     def _create_mowers(self, orders_list):
         mowers = list()

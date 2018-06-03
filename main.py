@@ -5,7 +5,9 @@ from Objects.Worker import Worker
 
 def main():
     mover = Worker()
-    ret = mover.treat_file(args.file_path)
+    with open(args.file_path, "r", encoding='utf-8') as fp:
+        lines = fp.read().splitlines()
+    ret = mover.work(lines)
     return ret
 
 

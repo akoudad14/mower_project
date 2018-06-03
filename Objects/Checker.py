@@ -31,10 +31,6 @@ class Checker:
                     print('Error: Bad cardinal point: {}'.format(coords[2]))
                     return -1
             else:
-                movements = mower.split()
-                if len(movements) != 1:
-                    print('Error: Bad movements: {}'.format(mower))
-                    return -1
                 movements = set(mower)
                 for movement in movements:
                     if movement not in ('D', 'G', 'A', 'D'):
@@ -51,6 +47,6 @@ class Checker:
                 return -1
             else:
                 if coord <= 0:
-                    print('Error: Bad value for {} coordinates: {}'.format(type, coord))
+                    print('Error: Bad value for {} coordinates: {}'.format(type_, coord))
                     return -1
         return 0
