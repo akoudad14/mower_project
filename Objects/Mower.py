@@ -44,7 +44,7 @@ class Mower:
         if self.y > self._max_y:
             self.y = self._max_y
         if self.x in other_positions and self.y in other_positions[self.x]:
-            self.y += value
+            self.y -= value
 
     def __str__(self):
         cardinal_point = self._orientations[self._orientation]

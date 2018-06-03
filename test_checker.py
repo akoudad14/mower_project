@@ -7,6 +7,10 @@ import io
 
 class CheckerTest(unittest.TestCase):
 
+    """
+    Test case use for test Checker methods
+    """
+
     def test_project_input(self):
         self.checker = Checker('5 5\n1 2 N\nGAGAGAGAA\n3 3 E\nAADAADADDA'.split('\n'))
         output = self._launch_process(equal=0)
