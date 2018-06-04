@@ -5,9 +5,14 @@ from Objects.Worker import Worker
 
 def main():
     mover = Worker()
-    with open(args.file_path, "r", encoding='utf-8') as fp:
-        lines = fp.read().splitlines()
-    ret = mover.work(lines)
+    try:
+        with open(args.file_path, "r", encoding='utf-8') as fp:
+            lines = fp.read().splitlines()
+    except UnicodeEncodeError:
+        print('Encoding file problem')
+        ret = -1
+    else:
+        ret = mover.work(lines)
     return ret
 
 
