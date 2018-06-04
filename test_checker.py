@@ -16,6 +16,11 @@ class CheckerTest(unittest.TestCase):
         output = self._launch_process(equal=0)
         self.assertEqual('', output)
 
+    def test_file(self):
+        self.checker = Checker([])
+        output = self._launch_process()
+        self.assertEqual('Empty file\n', output)
+
     def test_area_size(self):
         self.checker = Checker('5 5 5\n1 2 N\nGAGAGAGAA\n3 3 E\nAADAADADDA'.split('\n'))
         output = self._launch_process()
