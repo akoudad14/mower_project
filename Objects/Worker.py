@@ -1,65 +1,37 @@
 
 from .Checker import Checker
-from .Mower import Mower
+from .Mover import Mover
 
 
 class Worker:
 
     def __init__(self):
         self._checker = None
-        self._area = None
+        self._mover = None
 
     def work(self, lines):
         self._checker = Checker(lines)
         ret = self._checker.process()
         if ret == -1:
             return ret
-        self._create_area(lines[0])
-        ret = self._process(lines[1:])
+        self._create_mover(lines[0])
+        self._process(lines[1:])
         return ret
 
-    def _create_area(self, area_line):
+    def _create_mover(self, area_line):
         area_indic = area_line.split()
-        self._area = tuple([int(area_indic[0]), int(area_indic[1])])
+        self._mover = Mover(area_indic[0], area_indic[1])
 
     def _process(self, orders_list):
-        mowers, positions = self._create_mowers(orders_list)
-        if mowers is None:
-            return -1
-        self._move_mowers(orders_list, mowers, positions)
-        return 0
-
-    def _create_mowers(self, orders_list):
-        mowers = list()
-        positions = dict()
-        orders_count = len(orders_list)
-        for n in range(0, orders_count, 2):
-            orders = orders_list[n].split()
-            x = int(orders[0])
-            y = int(orders[1])
-            orientation = orders[2]
-            mower = Mower(x, y, orientation, max_x=self._area[0], max_y=self._area[1])
-            mowers.append(mower)
-            if x not in positions:
-                positions[x] = set()
-            if y in positions[x]:
-                print('Error: Two mowers have a same position: {} {}'.format(x, y))
-                return None, None
-            positions[x].add(y)
-        return mowers, positions
-
-    def _move_mowers(self, orders_list,  mowers, positions):
-        orders_count = len(orders_list)
-        for m, n in enumerate(range(1, orders_count, 2)):
-            mower = mowers[m]
-            orders = list(orders_list[n])
-            for order in orders:
-                if order == 'A':
-                    positions[mower.x].remove(mower.y)
-                    mower.move(positions)
-                    if mower.x not in positions:
-                        positions[mower.x] = set()
-                    positions[mower.x].add(mower.y)
-                else:
-                    mower.change_orientation(order)
-            print(mower)
+        for n, orders in enumerate(orders_list):
+            if n % 2 == 0:
+                mower_coordinate = orders.split()
+                self._mover.create_mower(mower_coordinate[0], mower_coordinate[1], mower_coordinate[2])
+            else:
+                orders = list(orders)
+                for order in orders:
+                    if order == 'A':
+                        self._mover.move()
+                    else:
+                        self._mover.change_orientation(order)
+                self._mover.print_mower_position()

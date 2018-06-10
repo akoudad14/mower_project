@@ -22,12 +22,12 @@ class WorkerTest(unittest.TestCase):
     def test_multi_mowers(self):
         lines = '5 5\n1 2 N\nGAGAGAGAA\n3 3 E\nAADAADADDA\n4 5 S\nDAAAGA\n1 1 W\nADAGADA'.split('\n')
         output = self._launch_work(lines)
-        self.assertEqual('0 3 N\n5 1 E\n1 4 S\n0 2 N\n', output)
+        self.assertEqual('1 3 N\n5 1 E\n1 4 S\n0 3 N\n', output)
 
     def test_many_movements(self):
         lines = '5 5\n1 2 N\nGAGAGAAADAAAGAAGAAAAAGAADAAAA\n3 3 E\nAAAADDAAAADDAAGADAAAAADDAAA'.split('\n')
         output = self._launch_work(lines)
-        self.assertEqual('3 5 N\n2 4 W\n', output)
+        self.assertEqual('0 5 N\n1 4 W\n', output)
 
     def _launch_work(self, lines):
         stdout = sys.stdout
